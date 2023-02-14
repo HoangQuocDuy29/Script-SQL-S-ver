@@ -1,0 +1,53 @@
+1.SELECT MaSach, TenSach
+  FROM Sach
+  WHERE NhaXB = 'Giáo Dục';
+2.SELECT *
+  FROM Sach
+  WHERE TenSach LIKE 'Ngày%';
+3.SELECT MaSach, TenSach
+  FROM Sach
+  WHERE NhaXB = 'Giáo Dục' AND GiaBan >= 100000 AND GiaBan <= 150000;
+4.SELECT MaSach, TenSach
+  FROM Sach
+  WHERE (NhaXB = 'Giáo Dục' OR NhaXB = 'Nhà Xuất Bản Trẻ')
+  AND GiaBan >= 90000 AND GiaBan <= 140000;
+5.SELECT SoHD, TongTien
+  FROM HoaDon
+  WHERE NgayBan BETWEEN '2014-01-01' AND '2014-12-31';
+6.SELECT SoHD, TongTien
+  FROM HoaDon
+  WHERE NgayBan BETWEEN '2014-04-01' AND '2014-04-30'
+  ORDER BY NgayBan ASC, TongTien DESC;
+7.SELECT DISTINCT KhachHang.MaKH, KhachHang.TenKH
+  FROM KhachHang, HoaDon
+  WHERE KhachHang.MaKH = HoaDon.MaKH AND NgayBan = '2014-04-10';
+8.SELECT COUNT(SoHD), SUM(TongTien)
+  FROM HoaDon, NhanVien
+  WHERE HoaDon.MaNV = NhanVien.MaNV AND NhanVien.TenNV = 'Trần Huy' AND NgayBan =   '2014-08-11';
+9.SELECT Sach.MaSach, Sach.TenSach
+  FROM Sach, ChiTietHD, HoaDon, KhachHang
+  WHERE Sach.MaSach = ChiTietHD.MaSach AND ChiTietHD.SoHD = HoaDon.SoHD
+  AND HoaDon.MaKH = KhachHang.MaKH AND KhachHang.TenKH = 'Nguyễn Đình Sơn'
+  AND HoaDon.NgayBan BETWEEN '2014-08-01' AND '2014-08-31';
+10.SELECT DISTINCT SoHD
+  FROM ChiTietHD
+  WHERE MaSach = 'S01' OR MaSach = 'S02'
+  AND SoLuong BETWEEN 10 AND 20;
+11.SELECT DISTINCT SoHD
+  FROM ChiTietHD
+  WHERE (MaSach = 'S10' AND SoLuong BETWEEN 5 AND 10)
+  AND (MaSach = 'S11' AND SoLuong BETWEEN 5 AND 10);
+12.SELECT MaSach, TenSach
+  FROM Sach
+  WHERE MaSach NOT IN (SELECT MaSach FROM ChiTietHD);
+13.SELECT MaSach, TenSach
+  FROM Sach
+  WHERE MaSach NOT IN (SELECT MaSach FROM ChiTietHD WHERE SoHD IN
+  (SELECT SoHD FROM HoaDon WHERE NgayBan BETWEEN '2014-01-01' AND '2014-12-31'));
+14.SELECT MaSach, TenSach
+  FROM Sach
+  WHERE MaSach NOT IN (SELECT MaSach FROM ChiTietHD WHERE SoHD IN
+  (SELECT SoHD FROM HoaDon WHERE YEAR(NgayBan) = 2014));
+15.SELECT MaSach, TenSach
+  FROM Sach
+  WHERE NhaXB = '
