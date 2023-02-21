@@ -51,3 +51,71 @@
 15.SELECT MaSach, TenSach
   FROM Sach
   WHERE NhaXB = '
+16.SELECT COUNT(DISTINCT SoHD) AS SoHoaDon
+FROM ChiTietHD
+WHERE MaSach IN (
+  SELECT MaSach 
+  FROM Sach
+  WHERE MaNXB = 'NXBGD'
+)
+17.SELECT COUNT(DISTINCT MaSach) AS SoDauSach
+FROM ChiTietHD
+WHERE YEAR(NgayLapHD) = 2014
+18.SELECT MAX(TongTien) AS MaxTongTien, MIN(TongTien) AS MinTongTien
+FROM HoaDon
+WHERE YEAR(NgayLapHD) = 2014
+19.SELECT AVG(TongTien) AS TrungBinhTongTien
+FROM HoaDon
+WHERE YEAR(NgayLapHD) = 2014
+20.SELECT SUM(TongTien) AS DoanhThu
+FROM HoaDon
+WHERE YEAR(NgayLapHD) = 2014
+21.SELECT COUNT(*) AS SoHoaDon
+FROM HoaDon
+WHERE TongTien = (
+  SELECT MAX(TongTien)
+  FROM HoaDon
+  WHERE YEAR(NgayLapHD) = 2014
+)
+22.SELECT TOP 1 KhachHang.TenKH AS HoTenKhachHang
+FROM HoaDon
+JOIN KhachHang ON HoaDon.MaKH = KhachHang.MaKH
+WHERE TongTien = (
+  SELECT MAX(TongTien)
+  FROM HoaDon
+  WHERE YEAR(NgayLapHD) = 2014
+)
+23.SELECT TOP 3 HoaDon.MaKH, KhachHang.TenKH, SUM(TongTien) AS DoanhSo
+FROM HoaDon
+JOIN KhachHang ON HoaDon.MaKH = KhachHang.MaKH
+GROUP BY HoaDon.MaKH, KhachHang.TenKH
+ORDER BY DoanhSo DESC
+24.SELECT Sach.MaSach, Sach.TenSach, Sach.GiaBan
+FROM Sach
+WHERE Sach.GiaBan IN (
+  SELECT TOP 3 GiaBan 
+  FROM Sach
+  GROUP BY GiaBan
+  ORDER BY GiaBan DESC
+)
+25.SELECT Sach.MaSach, Sach.TenSach, Sach.GiaBan
+FROM Sach
+WHERE Sach.GiaBan IN (
+  SELECT TOP 3 GiaBan 
+  FROM Sach
+  WHERE MaNXB = 'NXBGD'
+  GROUP BY GiaBan
+  ORDER BY GiaBan DESC
+)
+26.SELECT COUNT(*) AS TongSoSach
+FROM Sach
+WHERE MaNXB = 'NXBGD'
+27.SELECT Sach.MaNXB, NXB.TenNXB, COUNT(*) AS TongSoSach
+FROM Sach
+JOIN NXB ON Sach.MaNXB = NXB.MaNXB
+GROUP BY Sach.MaNXB, NXB.TenNXB
+28.SELECT Sach.MaNXB, NXB.TenNXB, MAX(Sach.GiaBan) AS GiaBanCaoNhat, 
+MIN(Sach.GiaBan) AS GiaBanThapNhat, AVG(Sach.GiaBan) AS GiaBanTrungBinh
+FROM Sach
+JOIN NXB ON Sach.MaNXB = NXB.MaNXB
+
